@@ -5,5 +5,6 @@
     => update, reset, rebase, clone 사용x
 
 5. 로컬 깃이랑  원격 깃 상태 생각하면서 작업하기
+6. revert는 돌아갈려는 곳이 아니라 잘못한 최신 커밋에 revert하는 것
 
 commit/push ,   checkout,   pull,   merge,  revert 정도

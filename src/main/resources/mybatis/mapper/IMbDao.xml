@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.study.market_board.dao.IMbDao">
+    <select id="getMbList" resultType="com.study.market_board.vo.MbVO">
+        SELECT
+            mb_no,
+            mb_product,
+            mb_title,
+            mb_category,
+            mb_price,
+            mb_writer,
+            mb_content,
+            mb_hit,
+            mb_reg_date,
+            mb_mod_date,
+            mb_del_yn
+        FROM
+            market_board
+    </select>
+
+<!--    <insert id="insertMb" parameterType="com.study.market_board.vo.MbVO">-->
+<!--        INSERT INTO market_board (-->
+<!--            mb_no,-->
+<!--            mb_product,-->
+<!--            mb_title,-->
+<!--            mb_category,-->
+<!--            mb_price,-->
+<!--            mb_writer,-->
+<!--            mb_content-->
+<!--        ) VALUES (-->
+<!--           seq_market_board.nextval,-->
+<!--           #{mbProduct}-->
+<!--           #{mbTitle},-->
+<!--           #{mbCategory},-->
+<!--           #{mbPrice},-->
+<!--           #{mbWriter},-->
+<!--           #{mbContent}-->
+<!--                 )-->
+<!--    </insert>-->
+
+
+
+</mapper>

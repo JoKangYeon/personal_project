@@ -1,8 +1,8 @@
 @charset "UTF-8";
 /*!
-* Start Bootstrap - Shop Homepage v5.0.6 (https://startbootstrap.com/template/shop-homepage)
+* Start Bootstrap - Shop Item v5.0.6 (https://startbootstrap.com/template/shop-item)
 * Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-shop-homepage/blob/master/LICENSE)
+* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-shop-item/blob/master/LICENSE)
 */
 /*!
  * Bootstrap  v5.2.3 (https://getbootstrap.com/)
@@ -343,10 +343,6 @@ label {
 button {
   border-radius: 0;
 }
-
-/*.login-Btn {*/
-/*  border: none;*/
-/*}*/
 
 button:focus:not(:focus-visible) {
   outline: 0;
@@ -3773,12 +3769,10 @@ textarea.form-control-lg {
   padding-top: var(--bs-navbar-brand-padding-y);
   padding-bottom: var(--bs-navbar-brand-padding-y);
   margin-right: var(--bs-navbar-brand-margin-end);
-  /*font-size: var(--bs-navbar-brand-font-size);*/
+  font-size: var(--bs-navbar-brand-font-size);
   color: var(--bs-navbar-brand-color);
-  /*color: #A0522D;*/
   text-decoration: none;
   white-space: nowrap;
-  font-size: 35px;
 }
 .navbar-brand:hover, .navbar-brand:focus {
   color: var(--bs-navbar-brand-hover-color);
@@ -10829,5 +10823,4 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
-
 }

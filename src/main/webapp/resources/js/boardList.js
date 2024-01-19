@@ -5,3 +5,8 @@
 */
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
+
+// document.querySelector("#loginBtn").addEventListener( "click", (e) => {
+//     e.preventDefault();
+//     location.href = "/login/login.com"
+// })

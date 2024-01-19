@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.study.member.dao.IMemberDao">
+    <select id="getMember" resultType="com.study.member.vo.MemberVO" parameterType="String">
+        SELECT
+            mm_id,
+            mm_password,
+            mm_email,
+            mm_name,
+            mm_phone,
+            mm_add,
+            mm_detail_add,
+            mm_reg_date,
+            mm_del_yn
+        FROM
+            market_member
+        WHERE
+            mm_id = #{mmId}
+    </select>
+    <select id="getMemberList" resultType="com.study.member.vo.MemberVO">
+        SELECT
+            mm_id,
+            mm_password,
+            mm_email,
+            mm_name,
+            mm_phone,
+            mm_add,
+            mm_detail_add,
+            mm_reg_date,
+            mm_del_yn
+        FROM
+            market_member
+    </select>
+
+    <insert id="registMember" parameterType="com.study.member.vo.MemberVO">
+        INSERT INTO market_member (
+            mm_id,
+            mm_password,
+            mm_email,
+            mm_name,
+            mm_phone,
+            mm_add,
+            mm_detail_add
+        ) VALUES (
+            #{mmId},
+            #{mmPassword},
+            #{mmEmail},
+            #{mmName},
+            #{mmPhone},
+            #{mmAdd},
+            #{mmDetailAdd}
+                 )
+    </insert>
+
+
+</mapper>

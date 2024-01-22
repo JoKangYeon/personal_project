@@ -11,10 +11,10 @@
 <body>
 <div class="signup">
     <h2>
-        <a href="/market_board/boardList.com"><img src="/resources/images/logo.png" alt="로고" height="30px"></a>
+        <a href="/market_board/boardList.wow"><img src="/resources/images/logo.png" alt="로고" height="30px"></a>
     </h2>
     <h3>회원가입</h3>
-    <form action="registMember.com" method="post">
+    <form action="/registMember.wow" method="post">
         <label for="mmId">아이디</label>
         <input type="text" id="mmId" name="mmId" placeholder="아이디" spellcheck="false" required>
         <div id="logId" style="display: none;color: red; margin-bottom: 10px;"></div>
@@ -23,7 +23,7 @@
 
             <button id="dupBtn" type="button">중복확인</button>
 
-            <input style="display: none" name="checkDup" value="${idCheck}">
+            <input style="display: none" name="checkDup" value="">
         </div>
 
         <label for="mmPassword">비밀번호</label>
@@ -40,7 +40,7 @@
         <input type="text" id="mmPhone" name="mmPhone" placeholder="휴대폰번호" spellcheck="false" required>
 
         <label for="mmAdd">주소</label>
-        <input type="text" id="mmAdd" name="mmAdd" placeholder="주소검색만 가능" readonly required>
+        <input type="text" id="mmAdd" name="mmAdd" placeholder="주소검색만 가능" required>
 
         <label for="mmDetailAdd">상세주소</label>
         <input type="text" id="mmDetailAdd" name="mmDetailAdd" placeholder="상세주소" required>
@@ -54,34 +54,59 @@
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
+
+    let isIdCheckDone = false;
+
     $(document).ready(() => {
         $("#dupBtn").on("click", (e) => {
             e.preventDefault();
             let curMemId = $("#mmId").val();
-            // if (curMemId.length === 0) {
-            //     alert("ID를 입력해주세요.");
-            // } else {
+            if (curMemId.length === 0) {
+                alert("ID를 입력해주세요.");
+            } else {
                 $.ajax({
-                    url: "/idCheck.com",
+                    url: "/idCheck.wow",
                     data: {"mmId": curMemId},
-                    type: "GET",
-                    dataType: "json",
-                    contentType: "application/json",
+
                     success: function (check) {
                         console.log(check)
                         let logId = $("#logId");
-                        // if (check ) {
-                        //     logId.css("display", "block").css("color", "blue").text("사용 가능한 ID입니다.");
-                        // } else {
-                        //     logId.css("display", "block").text("중복된 ID입니다.");
-                        // }
+                        if (check) {
+                            isIdCheckDone = true;
+                            logId.css("display", "block").css("color", "blue").text("사용 가능한 ID입니다.");
+                            $("input[name='checkDup']").val("checked")
+                        } else {
+                            logId.css("display", "block").css("color", "red").text("중복된 ID입니다.");
+                        }
                     },
                     error: (err) => {
                         // 에러 처리 코드 추가
                     }
                 });
-            // }
+            }
         });
+    });
+
+
+
+    $("#lastBtn").on("click", (e) => {
+        e.preventDefault();
+        const regex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$]).{8,16}$/
+        if(regex.test($("#mmPassword").val()) !== true){
+            let logPw = $("#logPw");
+            logPw.css("display", "block").css("color", "red").text("알파벳, 숫자, 특수문자(!@#$)를 조합해주세요");
+            $("#mmPassword").focus()
+            return;
+        }
+
+        if(!isIdCheckDone){
+            alert("ID 중복체크를 진행해주세요.")
+            return;
+        }
+
+        $(e.target).closest("form").submit();
+
+        alert("가입을 축하합니다.")
     });
 
 

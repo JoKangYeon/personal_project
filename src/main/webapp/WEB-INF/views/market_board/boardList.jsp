@@ -33,12 +33,12 @@
                 </li>
             </ul>
             <div class="d-flex">
-                <button class="btn btn-outline-dark" id="loginBtn" onclick="location.href='/login/login.com'" style="border: none" type="button">
+                <button class="btn btn-outline-dark" id="loginBtn" onclick="location.href='/login/login.wow'" style="border: none" type="button">
                     <i class="bi-cart-fill me-1"></i>
                     Login
 <%--                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>--%>
                 </button>
-                <a href="/login/signup.com">
+                <a href="/login/signup.wow">
                     <button class="btn btn-outline-dark" style="border: none" type="button">
                         <i class="bi-cart-fill me-1"></i>
                         SingUp
@@ -126,7 +126,7 @@
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/market_board/boardView.com">DetailView</a></div>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/market_board/boardView.wow">DetailView</a></div>
                         </div>
                     </div>
                 </div>

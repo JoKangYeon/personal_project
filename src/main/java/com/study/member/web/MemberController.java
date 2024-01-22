@@ -2,7 +2,10 @@ package com.study.member.web;
 
 import com.study.member.service.IMemberServiceImpl;
 import com.study.member.vo.MemberVO;
+import org.apache.poi.ss.formula.functions.Mode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class MemberController {
@@ -19,32 +24,29 @@ public class MemberController {
 
 
     // ID중복확인 Ajax
+    @RequestMapping(value = "/idCheck.wow")
     @ResponseBody
-    @RequestMapping("/idCheck.com")
-    public ResponseEntity<MemberVO> idCheck(String mmId){
+    public boolean idCheck(String mmId, Model model){
         MemberVO member = memberService.getMember(mmId);
-        System.out.println(member);
-//        if(member == null){
-//            return member;
-//        }else {
-//            return member;
-//        }
-        return ResponseEntity.ok(member);
+        if (member == null){
+            return true;
+        }else {
+            return false;
+        }
     }
 
-    @RequestMapping("/registMember.com")
+    @RequestMapping("/registMember.wow")
     public String registMember(String checkDup, MemberVO member, Model model){
 
-        model.addAttribute(checkDup);
-        String result = memberService.registMember(member);
-
-
-
+        model.addAttribute("checkDup", checkDup);
+        boolean result = memberService.registMember(member);
 
         return "market_board/boardList";
 
 
     }
+
+
 
 
 

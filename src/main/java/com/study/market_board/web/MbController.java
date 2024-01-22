@@ -22,12 +22,12 @@ public class MbController {
         return "market_board/boardList";
     }
 
-    @RequestMapping("/market_board/boardView.com")
+    @RequestMapping("/market_board/boardView.wow")
     public String marketView(Model model){
         return "market_board/boardView";
     }
 
-    @RequestMapping("/market_board/boardList.com")
+    @RequestMapping("/market_board/boardList.wow")
     public String marketList(Model model){
         List<MbVO> marketBoardList = MbService.getMarketBoardList();
         model.addAttribute("marketBoardList", marketBoardList);

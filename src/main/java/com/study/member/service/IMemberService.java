@@ -8,5 +8,5 @@ public interface IMemberService {
 
     public MemberVO getMember(String memId);
     public List<MemberVO> getMemberList();
-    public String registMember(MemberVO member);
+    public boolean registMember(MemberVO member);
 }

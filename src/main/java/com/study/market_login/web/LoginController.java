@@ -21,7 +21,7 @@ public class LoginController {
     @Inject
     ILoginService loginService;
 
-    @GetMapping("/login/login.com")
+    @GetMapping("/login/login.wow")
     public String loginGet(Model model, HttpServletRequest req){
 
         String remId = "";
@@ -36,7 +36,7 @@ public class LoginController {
         return "/login/login";
     }
 
-    @PostMapping("/login/login.com")
+    @PostMapping("/login/login.wow")
     public String loginPost(Model model,  String userId,  String userPw, @RequestParam(value = "rememberMe", required = false)
                             String saveId, HttpServletResponse resp, HttpServletRequest req, HttpSession session) throws Exception {
 
@@ -74,14 +74,14 @@ public class LoginController {
 
 
 
-    @RequestMapping("/login/logout.com")
+    @RequestMapping("/login/logout.wow")
     public String logout(){
         return "/market_board/boardList";
     }
 
 
 
-    @RequestMapping("/login/signup.com")
+    @RequestMapping("/login/signup.wow")
     public String goSignup(){
         return "/login/signup";
     }

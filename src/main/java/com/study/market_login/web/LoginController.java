@@ -1,6 +1,8 @@
 package com.study.market_login.web;
 
 import com.study.common.util.CookieUtils;
+import com.study.market_board.service.IMbService;
+import com.study.market_board.vo.MbVO;
 import com.study.market_login.service.ILoginService;
 import com.study.member.vo.MemberVO;
 import org.springframework.stereotype.Controller;
@@ -14,12 +16,16 @@ import javax.inject.Inject;
 import javax.servlet.http.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 @Controller
 public class LoginController {
 
     @Inject
     ILoginService loginService;
+
+    @Inject
+    IMbService mbService;
 
     @GetMapping("/login/login.wow")
     public String loginGet(Model model, HttpServletRequest req){
@@ -55,7 +61,7 @@ public class LoginController {
 
         if(user == null || checkNon){   // 입력한 id 또는 비밀번호가 틀린 경우, 사용자가 입력안한 경우
             model.addAttribute("Wrong", null);
-            return "redirect:/login/login.com?msg=" + URLEncoder.encode("ID 또는 비밀번호를 확인해주세요.", "utf-8");
+            return "redirect:/login/login.wow?msg=" + URLEncoder.encode("ID 또는 비밀번호를 확인해주세요.", "utf-8");
         }
 
         // 위 2가지 경우가 아니면 로그인 성공
@@ -67,7 +73,11 @@ public class LoginController {
 
         session.setAttribute("USER", user);
         model.addAttribute("USER", user);
-        return "redirect:/market_board/boardList.com";
+
+
+        List<MbVO> marketBoardList = mbService.getMarketBoardList();
+        model.addAttribute("marketBoardList", marketBoardList);
+        return "market_board/boardList";
     }
 
 

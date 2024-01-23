@@ -1,3 +1,4 @@
+<%@ page import="com.study.member.vo.MemberVO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -33,6 +34,8 @@
                 </li>
             </ul>
             <div class="d-flex">
+                <% MemberVO curMem = (MemberVO) session.getAttribute("USER"); %>
+                <c:if test="<%=curMem == null%>">
                 <button class="btn btn-outline-dark" id="loginBtn" onclick="location.href='/login/login.wow'" style="border: none" type="button">
                     <i class="bi-cart-fill me-1"></i>
                     Login
@@ -45,6 +48,10 @@
                         <%--                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>--%>
                     </button>
                 </a>
+                </c:if>
+                <c:if test="<%=curMem != null%>">
+                    <a href="#" style="text-decoration-line: none; color: black"><span style="font-size: large; font-weight: bold"><%=curMem.getMmName()%>님</span></a>
+                </c:if>
             </div>
         </div>
     </div>
@@ -94,7 +101,7 @@
     <div class="container px-4 px-lg-5">
         <div class="d-flex" style="justify-content: flex-end">
         <button type="button" class="btn btn-warning btn-lg"
-                style="margin-bottom: 12px;">판매글 작성하기
+                style="margin-bottom: 12px;" onclick="location.href='/market_board/boardForm.wow'">판매글 작성하기
         </button>
         </div>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">

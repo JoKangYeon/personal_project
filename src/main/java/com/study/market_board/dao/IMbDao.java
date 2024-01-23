@@ -9,5 +9,5 @@ import java.util.List;
 public interface IMbDao {
 
     public List<MbVO> getMbList();
-//    public int insertMb(MbVO mbVO);
+    public void insertMb(MbVO mbVO);
 }

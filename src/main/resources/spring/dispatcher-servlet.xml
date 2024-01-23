@@ -22,4 +22,7 @@
                                 expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <!--빈 이름은 무조건  multipartResolver -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></bean>
+
 </beans>

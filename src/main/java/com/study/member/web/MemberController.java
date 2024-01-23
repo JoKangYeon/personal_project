@@ -1,5 +1,7 @@
 package com.study.member.web;
 
+import com.study.market_board.service.IMbService;
+import com.study.market_board.vo.MbVO;
 import com.study.member.service.IMemberServiceImpl;
 import com.study.member.vo.MemberVO;
 import org.apache.poi.ss.formula.functions.Mode;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -21,6 +24,8 @@ public class MemberController {
 
     @Inject
     IMemberServiceImpl memberService;
+
+
 
 
     // ID중복확인 Ajax
@@ -36,12 +41,10 @@ public class MemberController {
     }
 
     @RequestMapping("/registMember.wow")
-    public String registMember(String checkDup, MemberVO member, Model model){
+    public String registMember(MemberVO member, Model model){
 
-        model.addAttribute("checkDup", checkDup);
-        boolean result = memberService.registMember(member);
-
-        return "market_board/boardList";
+        memberService.registMember(member);
+        return "login/login";
 
 
     }

@@ -1,18 +1,26 @@
 package com.study.market_board.vo;
 
+import com.study.common.attach.vo.AttachVO;
+
+import java.util.Arrays;
+import java.util.List;
+
 public class MbVO {
 
     private int mbNo;               /* 글번호 */
-    private String mbProduct;
-    private String mbTitle;
-    private String mbCategory;
-    private int mbPrice;
-    private String mbWriter;
-    private String mbContent;
-    private int mbHit;
-    private String mbRegDate;
-    private String mbModDate;
-    private String mbDelYn;
+    private String mbProduct;       /* 상품명 */
+    private String mbTitle;         /* 글제목 */
+    private String mbCategory;      /* 글분류 */
+    private int mbPrice;            /* 상품가격 */
+    private String mbWriter;        /* 글 작성자 */
+    private String mbContent;       /* 글 내용 */
+    private int mbHit;              /* 글 조회수 */
+    private String mbRegDate;       /* 작성일 */
+    private String mbModDate;       /* 수정일 */
+    private String mbDelYn;         /* 삭제여부 */
+
+    private List<AttachVO> attaches;    /* 첨부파일 list */
+    private int[] delAtchNos;           /* 삭제확인 */
 
     @Override
     public String toString() {
@@ -28,6 +36,8 @@ public class MbVO {
                 ", mbRegDate='" + mbRegDate + '\'' +
                 ", mbModDate='" + mbModDate + '\'' +
                 ", mbDelYn='" + mbDelYn + '\'' +
+                ", attaches=" + attaches +
+                ", delAtchNos=" + Arrays.toString(delAtchNos) +
                 '}';
     }
 
@@ -117,5 +127,21 @@ public class MbVO {
 
     public void setMbDelYn(String mbDelYn) {
         this.mbDelYn = mbDelYn;
+    }
+
+    public List<AttachVO> getAttaches() {
+        return attaches;
+    }
+
+    public void setAttaches(List<AttachVO> attaches) {
+        this.attaches = attaches;
+    }
+
+    public int[] getDelAtchNos() {
+        return delAtchNos;
+    }
+
+    public void setDelAtchNos(int[] delAtchNos) {
+        this.delAtchNos = delAtchNos;
     }
 }

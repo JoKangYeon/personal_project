@@ -20,10 +20,7 @@
         <div id="logId" style="display: none;color: red; margin-bottom: 10px;"></div>
 
         <div style="margin-bottom: 5px">
-
             <button id="dupBtn" type="button">중복확인</button>
-
-            <input style="display: none" name="checkDup" value="">
         </div>
 
         <label for="mmPassword">비밀번호</label>
@@ -50,9 +47,7 @@
     </form>
 </div>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 
     let isIdCheckDone = false;
@@ -88,18 +83,17 @@
     });
 
 
-
     $("#lastBtn").on("click", (e) => {
         e.preventDefault();
         const regex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$]).{8,16}$/
-        if(regex.test($("#mmPassword").val()) !== true){
+        if (regex.test($("#mmPassword").val()) !== true) {
             let logPw = $("#logPw");
             logPw.css("display", "block").css("color", "red").text("알파벳, 숫자, 특수문자(!@#$)를 조합해주세요");
             $("#mmPassword").focus()
             return;
         }
 
-        if(!isIdCheckDone){
+        if (!isIdCheckDone) {
             alert("ID 중복체크를 진행해주세요.")
             return;
         }

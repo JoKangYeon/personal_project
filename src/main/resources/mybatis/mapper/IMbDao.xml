@@ -18,25 +18,25 @@
             market_board
     </select>
 
-<!--    <insert id="insertMb" parameterType="com.study.market_board.vo.MbVO">-->
-<!--        INSERT INTO market_board (-->
-<!--            mb_no,-->
-<!--            mb_product,-->
-<!--            mb_title,-->
-<!--            mb_category,-->
-<!--            mb_price,-->
-<!--            mb_writer,-->
-<!--            mb_content-->
-<!--        ) VALUES (-->
-<!--           seq_market_board.nextval,-->
-<!--           #{mbProduct}-->
-<!--           #{mbTitle},-->
-<!--           #{mbCategory},-->
-<!--           #{mbPrice},-->
-<!--           #{mbWriter},-->
-<!--           #{mbContent}-->
-<!--                 )-->
-<!--    </insert>-->
+    <insert id="insertMb" parameterType="com.study.market_board.vo.MbVO">
+        INSERT INTO market_board (
+            mb_no,
+            mb_product,
+            mb_title,
+            mb_category,
+            mb_price,
+            mb_writer,
+            mb_content
+        ) VALUES (
+           seq_market_board.nextval,
+           #{mbProduct},
+           #{mbTitle},
+           #{mbCategory},
+           #{mbPrice},
+           #{mbWriter},
+           #{mbContent}
+                 )
+    </insert>
 
 
 

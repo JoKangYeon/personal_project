@@ -71,31 +71,30 @@
     </div>
     <div style="width: 100%; height: 15%; display: flex; justify-content: center">
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option2">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="DESC" checked="checked">
             <label class="form-check-label" for="inlineRadio1">최신순</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option3" >
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="ASC" >
             <label class="form-check-label" for="inlineRadio2">오래된순</label>
         </div>
         </div>
     </div>
     <div style="width: 100%; height: 0%; display: flex; justify-content: center">
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio3" value="option1">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio3" value="MBC01" checked="checked">
             <label class="form-check-label" for="inlineRadio3">All</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio4" value="option2">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio4" value="MBC02">
             <label class="form-check-label" for="inlineRadio4">도서</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio5" value="option3" >
+            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio5" value="MBC03" >
             <label class="form-check-label" for="inlineRadio5">의류</label>
         </div>
     </div>
 </div>
-
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5">
@@ -109,10 +108,17 @@
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Sale badge-->
-                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale
-                        </div>
+                        <%--조회수가 10회이상이면 hot--%>
+<%--                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">--%>
+<%--                        </div>--%>
+<%--                        mbList.attaches eq [] ? "https://dummyimage.com/450x300/dee2e6/6c757d.jpg" :--%>
                         <!-- Product image-->
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..."/>
+<%--                        <% String address= request.getContextPath(); request.setAttribute("address", address);%>--%>
+                        <img class="card-img-top"  alt="image" style="height: 250px; width: 270px" src="<%=request.getContextPath()%>/attach/showImg.wow?fileName=${mbList.attaches[0].atchFileName}&filePath=${mbList.attaches[0].atchPath}">
+
+                        <div>
+
+                        </div>
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
@@ -162,6 +168,25 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="<%=request.getContextPath() %>/resources/js/boardList.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(() => {
+        let radioValDate = $('input[name="inlineRadioOptions"]:checked').val();
+        let radioValCate = $('input[name="inlineRadioOptions2"]:checked').val();
+        alert(radioValCate);
+
+        $.ajax({
+            url: "/orderBy.wow",
+            data: {"orderBy": radioValDate, "cateBy": radioValCate},
+            success : (data) => {
+
+        }
+        })
+
+
+
+    })
+</script>
 
 </body>
 </html>

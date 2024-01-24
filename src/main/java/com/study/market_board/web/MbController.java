@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,9 +24,13 @@ public class MbController {
     @Inject
     StudyAttachUtils attachUtils;
 
+
+
     @RequestMapping("/")
     public String marketHome(Model model){  // Home이지만 List가 홈임
         List<MbVO> marketBoardList = mbService.getMarketBoardList();
+
+
         model.addAttribute("marketBoardList", marketBoardList);
         return "market_board/boardList";
     }
@@ -50,16 +55,64 @@ public class MbController {
 
     @RequestMapping("/boardRegist.wow")
     public String marketRegist(Model model, MbVO mbVo, @RequestParam(name = "mbFiles", required = false) MultipartFile[] mbFiles) throws IOException {
-        System.out.println("===========>" + mbFiles[0]);
-        System.out.println(mbVo);
+//        System.out.println("===========>" + mbFiles[0]);
+//        System.out.println(mbVo);
         if(mbFiles != null){
             List<AttachVO> attachList = attachUtils.getAttachListByMultiparts(mbFiles,"Market_Board", "market_board");
             mbVo.setAttaches(attachList);
         }
         mbService.insertMb(mbVo);
 
-        return "market_board/boardList";
+        return "redirect:market_board/boardList.wow";
     }
+
+    @RequestMapping("/orderBy.wow")
+    public List<MbVO> setBoardByDate(String orderBy, String cateBy) {
+        List<MbVO> marketBoardList = mbService.getMarketBoardList();
+
+        if(orderBy.equals("DESC")){
+            if (cateBy.equals("MBC01")) {
+                return marketBoardList;
+            }else if(cateBy.equals("MBC02")){
+
+            }else {
+
+            }
+        }else {
+            if(cateBy.equals("MBC01")) {
+
+            }else if(cateBy.equals("MBC02")){
+
+            }else {
+
+            }
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

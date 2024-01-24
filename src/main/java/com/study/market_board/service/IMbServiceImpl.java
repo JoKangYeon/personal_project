@@ -20,13 +20,28 @@ public class IMbServiceImpl implements IMbService {
 
     @Override
     public List<MbVO> getMarketBoardList() {
-        return mbDao.getMbList();
+        List<MbVO> mbList = mbDao.getMbList();
+        List<AttachVO> attaches = attachDao.getAttachList();
+        // mbList에 attaches 값 넣어주기
+        for (MbVO mbVO : mbList){
+            for (AttachVO attach : attaches){
+                if(mbVO.getMbNo() == attach.getAtchParentNo()){
+                    mbVO.getAttaches().add(attach);
+                    System.out.println(attach);
+                }
+            }
+        }
+
+        return mbList;
     }
 
     @Override
     public void insertMb(MbVO mbVO) {
-
+        // 현재 parentNo의 값이 0인데 selectkey를 사용해서 값변경
         mbDao.insertMb(mbVO);
+        //89
+
+        System.out.println("=======>  " + mbVO.getMbNo());
 
         List<AttachVO> attaches = mbVO.getAttaches();
         if(attaches != null){
@@ -35,6 +50,12 @@ public class IMbServiceImpl implements IMbService {
                 attachDao.insertAttach(attach);
             }
         }
+    }
+
+    @Override
+    public List<MbVO> getOldMarketBoardList() {
+
+        return mbDao.getOldMbList();
     }
 
 

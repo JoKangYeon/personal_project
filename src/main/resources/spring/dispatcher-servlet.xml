@@ -22,7 +22,7 @@
                                 expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!--빈 이름은 무조건  multipartResolver -->
+    <!--빈 이름은 무조건  multipartResolver -->       <!-- 파라미터로 온 객체를 알아서 넣어주는 bean-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></bean>
 
 </beans>

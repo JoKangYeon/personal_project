@@ -51,7 +51,7 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
 
-    <multipart-config>
+    <multipart-config>    <!-- multipart baen 파일 용량 설정-->
       <max-file-size>31457280</max-file-size>   <!-- 30mb-->
       <max-request-size>1004857600</max-request-size>  <!-- 100mb -->
     </multipart-config>

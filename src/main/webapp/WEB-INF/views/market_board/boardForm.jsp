@@ -35,7 +35,7 @@
             </tr>
             <tr>
                 <th>판매가</th>
-                <td><input type="text" name="mbPrice" value=""  class="form-control input-sm" required="required" ></td>
+                <td><input type="number" name="mbPrice" value=""  class="form-control input-sm" required="required"></td>
             </tr>
             <tr>
                 <th>분류</th>
@@ -62,7 +62,7 @@
                 </th>
                 <td class="file_area">
                     <div class="form-inline">
-                        <input type="file" name="mbFiles" class="form-control">
+                        <input type="file" name="mbFiles" class="form-control" required="required">
                         <button type="button" class="btn_delete btn btn-sm">삭제</button>
                     </div>
                 </td>
@@ -91,7 +91,7 @@
 <script>
     $('#id_btn_new_file').click(function(){
         $('.file_area').append('<div class="form-inline">'
-            + '<input type="file" name="mbFiles" class="form-control">'
+            + '<input type="file" name="mbFiles" class="form-control" required="required">'
             + ' <button type="button" class="btn_delete btn btn-sm">삭제</button>' + '</div>');
     });
 

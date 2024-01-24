@@ -2,6 +2,7 @@ package com.study.market_board.vo;
 
 import com.study.common.attach.vo.AttachVO;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,8 +20,9 @@ public class MbVO {
     private String mbModDate;       /* 수정일 */
     private String mbDelYn;         /* 삭제여부 */
 
-    private List<AttachVO> attaches;    /* 첨부파일 list */
+    private List<AttachVO> attaches = new ArrayList<>();    /* 첨부파일 list */
     private int[] delAtchNos;           /* 삭제확인 */
+
 
     @Override
     public String toString() {

@@ -8,4 +8,6 @@ import java.util.List;
 public interface IMbService {
     public List<MbVO> getMarketBoardList();
     public  void insertMb(MbVO mbVO);
+
+    public List<MbVO> getOldMarketBoardList();
 }

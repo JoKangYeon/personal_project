@@ -3,6 +3,7 @@
 <mapper namespace="com.study.common.attach.dao.IAttachDao">
     <insert id="insertAttach" parameterType="com.study.common.attach.vo.AttachVO">
         INSERT INTO attach (
+            atch_no,
             atch_parent_no,
             atch_file_name,
             atch_original_name,
@@ -11,6 +12,7 @@
             atch_content_type,
             atch_path
         ) VALUES (
+            seq_attach.nextval,
             #{atchParentNo},
             #{atchFileName},
             #{atchOriginalName},
@@ -20,4 +22,19 @@
             #{atchPath}
                  )
     </insert>
+    <select id="getAttachList" resultType="com.study.common.attach.vo.AttachVO">
+        SELECT
+            atch_no,
+            atch_parent_no,
+            atch_file_name,
+            atch_original_name,
+            atch_file_size,
+            atch_fancy_size,
+            atch_content_type,
+            atch_path,
+            atch_del_yn,
+            atch_reg_date
+        FROM
+            attach
+    </select>
 </mapper>

@@ -1,5 +1,9 @@
 package com.study.common.attach.vo;
 
+
+
+
+
 public class AttachVO {
 
     private int atchNo;                     /* 첨부파일 번호 */

@@ -6,8 +6,8 @@ import com.study.market_board.vo.MbVO;
 import java.util.List;
 
 public interface IMbService {
-    public List<MbVO> getMarketBoardList();
+    public List<MbVO> getMarketBoardList(String cate, String sort);
     public  void insertMb(MbVO mbVO);
 
-    public List<MbVO> getOldMarketBoardList();
+
 }

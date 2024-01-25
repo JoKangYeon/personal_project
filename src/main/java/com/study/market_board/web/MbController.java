@@ -28,7 +28,7 @@ public class MbController {
 
     @RequestMapping("/")
     public String marketHome(Model model){  // Home이지만 List가 홈임
-        List<MbVO> marketBoardList = mbService.getMarketBoardList();
+        List<MbVO> marketBoardList = mbService.getMarketBoardList("MBC01", "DESC");
 
 
         model.addAttribute("marketBoardList", marketBoardList);
@@ -42,7 +42,7 @@ public class MbController {
 
     @RequestMapping("/market_board/boardList.wow")
     public String marketList(Model model){
-        List<MbVO> marketBoardList = mbService.getMarketBoardList();
+        List<MbVO> marketBoardList = mbService.getMarketBoardList("MBC01","DESC");
         model.addAttribute("marketBoardList", marketBoardList);
         return "market_board/boardList";
     }
@@ -67,29 +67,10 @@ public class MbController {
     }
 
     @RequestMapping("/orderBy.wow")
-    public List<MbVO> setBoardByDate(String orderBy, String cateBy) {
-        List<MbVO> marketBoardList = mbService.getMarketBoardList();
-
-        if(orderBy.equals("DESC")){
-            if (cateBy.equals("MBC01")) {
-                return marketBoardList;
-            }else if(cateBy.equals("MBC02")){
-
-            }else {
-
-            }
-        }else {
-            if(cateBy.equals("MBC01")) {
-
-            }else if(cateBy.equals("MBC02")){
-
-            }else {
-
-            }
-        }
-
-
-
+    public String setBoardByDate(Model model, String sort, String cate) {
+        List<MbVO> marketBoardList = mbService.getMarketBoardList(cate,sort);
+        model.addAttribute("marketBoardList", marketBoardList);
+        return "market_board/listBox";
     }
 
 

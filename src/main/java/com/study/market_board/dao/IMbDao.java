@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface IMbDao {
 
-    List<MbVO> getMbList(@Param(value = "sort") String sort, @Param(value = "cate") String cate);
-    void insertMb(MbVO mbVO);
+    public List<MbVO> getMbList(@Param("cate") String cate, @Param("sort") String sort);
+    public void insertMb(MbVO mbVO);
 
 }

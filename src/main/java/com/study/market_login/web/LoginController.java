@@ -75,8 +75,8 @@ public class LoginController {
         model.addAttribute("USER", user);
 
 
-        List<MbVO> marketBoardList = mbService.getMarketBoardList();
-        model.addAttribute("marketBoardList", marketBoardList);
+//        List<MbVO> marketBoardList = mbService.getMarketBoardList("DESC", "MBC01");
+//        model.addAttribute("marketBoardList", marketBoardList);
         return "market_board/boardList";
     }
 

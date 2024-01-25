@@ -2,69 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.study.market_board.dao.IMbDao">
 
-    <select id="getMbList" resultType="com.study.market_board.vo.MbVO">
-        SELECT
-            mb_no,
-            mb_product,
-            mb_title,
-            mb_category,
-            mb_price,
-            mb_writer,
-            mb_content,
-            mb_hit,
-            mb_reg_date,
-            mb_mod_date,
-            mb_del_yn
-        FROM
-            market_board
-        ORDER BY mb_no DESC
-    </select>
-    <select id="getOldMbList" resultType="com.study.market_board.vo.MbVO">
-        SELECT
-            mb_no,
-            mb_product,
-            mb_title,
-            mb_category,
-            mb_price,
-            mb_writer,
-            mb_content,
-            mb_hit,
-            mb_reg_date,
-            mb_mod_date,
-            mb_del_yn
-        FROM
-            market_board
-        ORDER BY mb_no ASC
-    </select>
-
-
-    <!--    <select id="getMbList" resultType="com.study.market_board.vo.MbVO">-->
-<!--        SELECT-->
-<!--            m.mb_no,-->
-<!--            m.mb_product,-->
-<!--            m.mb_title,-->
-<!--            m.mb_category,-->
-<!--            m.mb_price,-->
-<!--            m.mb_writer,-->
-<!--            m.mb_content,-->
-<!--            m.mb_hit,-->
-<!--            m.mb_reg_date,-->
-<!--            m.mb_mod_date,-->
-<!--            m.mb_del_yn,-->
-<!--            a.atch_path AS-->
-<!--        FROM-->
-<!--            market_board m-->
-<!--                LEFT JOIN (-->
-<!--                SELECT-->
-<!--                    atch_parent_no,-->
-<!--                    MIN(atch_no) AS min_atch_no-->
-<!--                FROM-->
-<!--                    attach-->
-<!--                GROUP BY-->
-<!--                    atch_parent_no-->
-<!--            ) min_attach ON m.mb_no = min_attach.atch_parent_no-->
-<!--                LEFT JOIN attach a ON m.mb_no = a.atch_parent_no AND a.atch_no = min_attach.min_atch_no-->
-<!--    </select>-->
 
     <insert id="insertMb" parameterType="com.study.market_board.vo.MbVO">
         <selectKey keyProperty="mbNo" resultType="int" order="BEFORE">
@@ -88,7 +25,38 @@
            #{mbContent}
                  )
     </insert>
+    <select id="getMbList" resultType="com.study.market_board.vo.MbVO" >
+        SELECT
+            mb_no,
+            mb_product,
+            mb_title,
+            mb_category,
+            mb_price,
+            mb_writer,
+            mb_content,
+            mb_hit,
+            mb_reg_date,
+            mb_mod_date,
+            mb_del_yn
+        FROM
+            market_board
 
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(cate)">
+            <if test='cate == "ASC"'>    ORDER BY mb_no ASC </if>
+            <if test='cate == "DESC"'>    ORDER BY mb_no DESC </if>
+        </if>
+
+
+
+        WHERE mb_category = #{cate}
+        AND mb_del_yn = 'N'
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(sort)">
+            <if test='sort == "ASC"'>    ORDER BY mb_no ASC </if>
+            <if test='sort == "DESC"'>    ORDER BY mb_no DESC </if>
+        </if>
+
+
+    </select>
 
 
 </mapper>

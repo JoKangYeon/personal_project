@@ -36,21 +36,23 @@
             <div class="d-flex">
                 <% MemberVO curMem = (MemberVO) session.getAttribute("USER"); %>
                 <c:if test="<%=curMem == null%>">
-                <button class="btn btn-outline-dark" id="loginBtn" onclick="location.href='/login/login.wow'" style="border: none" type="button">
-                    <i class="bi-cart-fill me-1"></i>
-                    Login
-<%--                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>--%>
-                </button>
-                <a href="/login/signup.wow">
-                    <button class="btn btn-outline-dark" style="border: none" type="button">
+                    <button class="btn btn-outline-dark" id="loginBtn" onclick="location.href='/login/login.wow'"
+                            style="border: none" type="button">
                         <i class="bi-cart-fill me-1"></i>
-                        SingUp
-                        <%--                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>--%>
+                        Login
+                            <%--                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>--%>
                     </button>
-                </a>
+                    <a href="/login/signup.wow">
+                        <button class="btn btn-outline-dark" style="border: none" type="button">
+                            <i class="bi-cart-fill me-1"></i>
+                            SingUp
+                                <%-- <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>--%>
+                        </button>
+                    </a>
                 </c:if>
                 <c:if test="<%=curMem != null%>">
-                    <a href="#" style="text-decoration-line: none; color: black"><span style="font-size: large; font-weight: bold"><%=curMem.getMmName()%>님</span></a>
+                    <a href="#" style="text-decoration-line: none; color: black"><span
+                            style="font-size: large; font-weight: bold"><%=curMem.getMmName()%>님</span></a>
                 </c:if>
             </div>
         </div>
@@ -58,7 +60,7 @@
 </nav>
 
 
-<div class="search-box" style="display: flex; flex-direction: column;" >
+<div class="search-box" style="display: flex; flex-direction: column;">
     <div style="width: 100%; height: 70%; display: flex; justify-content: center; margin-top: 20px">
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
@@ -75,75 +77,36 @@
             <label class="form-check-label" for="inlineRadio1">최신순</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="ASC" >
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="ASC">
             <label class="form-check-label" for="inlineRadio2">오래된순</label>
         </div>
-        </div>
     </div>
-    <div style="width: 100%; height: 0%; display: flex; justify-content: center">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio3" value="MBC01" checked="checked">
-            <label class="form-check-label" for="inlineRadio3">All</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio4" value="MBC02">
-            <label class="form-check-label" for="inlineRadio4">도서</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio5" value="MBC03" >
-            <label class="form-check-label" for="inlineRadio5">의류</label>
-        </div>
+</div>
+<div style="width: 100%; height: 0%; display: flex; justify-content: center">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio3" value="MBC01" checked="checked">
+        <label class="form-check-label" for="inlineRadio3">All</label>
     </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio4" value="MBC02">
+        <label class="form-check-label" for="inlineRadio4">도서</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio5" value="MBC03">
+        <label class="form-check-label" for="inlineRadio5">의류</label>
+    </div>
+</div>
 </div>
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5">
         <div class="d-flex" style="justify-content: flex-end">
-        <button type="button" class="btn btn-warning btn-lg"
-                style="margin-bottom: 12px;" onclick="location.href='/market_board/boardForm.wow'">판매글 작성하기
-        </button>
+            <button type="button" class="btn btn-warning btn-lg"
+                    style="margin-bottom: 12px;" onclick="location.href='/market_board/boardForm.wow'">판매글 작성하기
+            </button>
         </div>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <c:forEach items="${marketBoardList}" var="mbList">
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Sale badge-->
-                        <%--조회수가 10회이상이면 hot--%>
-<%--                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">--%>
-<%--                        </div>--%>
-<%--                        mbList.attaches eq [] ? "https://dummyimage.com/450x300/dee2e6/6c757d.jpg" :--%>
-                        <!-- Product image-->
-<%--                        <% String address= request.getContextPath(); request.setAttribute("address", address);%>--%>
-                        <img class="card-img-top"  alt="image" style="height: 250px; width: 270px" src="<%=request.getContextPath()%>/attach/showImg.wow?fileName=${mbList.attaches[0].atchFileName}&filePath=${mbList.attaches[0].atchPath}">
+        <div id="list_box" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-                        <div>
-
-                        </div>
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">${mbList.mbProduct}</h5>
-                                <!-- Product reviews-->
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                </div>
-                                <!-- Product price-->
-                        <%--<span class="text-muted text-decoration-line-through"></span>--%>
-                                ${mbList.mbPrice}원
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/market_board/boardView.wow">DetailView</a></div>
-                        </div>
-                    </div>
-                </div>
-            </c:forEach>
         </div>
     </div>
     <nav aria-label="Page navigation example">
@@ -170,22 +133,54 @@
 <script src="<%=request.getContextPath() %>/resources/js/boardList.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+    let radioValDate = $('input[name="inlineRadioOptions"]:checked').val();
+    let radioValCate = $('input[name="inlineRadioOptions2"]:checked').val();
+    console.log(radioValDate, radioValCate);
+
+
     $(document).ready(() => {
-        let radioValDate = $('input[name="inlineRadioOptions"]:checked').val();
-        let radioValCate = $('input[name="inlineRadioOptions2"]:checked').val();
-        alert(radioValCate);
-
-        $.ajax({
-            url: "/orderBy.wow",
-            data: {"orderBy": radioValDate, "cateBy": radioValCate},
-            success : (data) => {
-
-        }
-        })
-
-
+        $('input:radio[name="inlineRadioOptions"]:radio[value="DESC"]').prop('checked', true);
+        $('input:radio[name="inlineRadioOptions2"]:radio[value="MBC01"]').prop('checked', true);
+        boardListLoad();
 
     })
+
+    let clickedSortRadio = $('input[name="inlineRadioOptions"]')
+    let clickedCateRadio = $('input[name="inlineRadioOptions2"]')
+
+
+    clickedSortRadio.map((i, v) => {
+        v.addEventListener("click", (e) => {
+            radioValDate = $('input[name="inlineRadioOptions"]:checked').val();
+            boardListLoad();
+        })
+    })
+    clickedCateRadio.map((i, v) => {
+        v.addEventListener("click", () => {
+            radioValCate = $('input[name="inlineRadioOptions2"]:checked').val();
+            boardListLoad();
+        })
+    })
+
+
+
+
+    function boardListLoad() {
+        let listParam = {"sort" : radioValDate, "cate":radioValCate};
+        let $listDiv = $("#list_box")
+        $listDiv.load("/orderBy.wow", listParam);
+    }
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 </body>

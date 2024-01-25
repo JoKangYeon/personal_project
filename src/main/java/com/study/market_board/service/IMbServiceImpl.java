@@ -19,8 +19,9 @@ public class IMbServiceImpl implements IMbService {
     IAttachDao attachDao;
 
     @Override
-    public List<MbVO> getMarketBoardList() {
-        List<MbVO> mbList = mbDao.getMbList();
+    public List<MbVO> getMarketBoardList(String cate, String sort) {
+        System.out.println(cate  + sort);
+        List<MbVO> mbList = mbDao.getMbList(cate, sort);
         List<AttachVO> attaches = attachDao.getAttachList();
         // mbList에 attaches 값 넣어주기
         for (MbVO mbVO : mbList){
@@ -52,11 +53,7 @@ public class IMbServiceImpl implements IMbService {
         }
     }
 
-    @Override
-    public List<MbVO> getOldMarketBoardList() {
 
-        return mbDao.getOldMbList();
-    }
 
 
 }

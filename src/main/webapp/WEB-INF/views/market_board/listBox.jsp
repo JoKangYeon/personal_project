@@ -24,9 +24,14 @@
                 <%--                        mbList.attaches eq [] ? "https://dummyimage.com/450x300/dee2e6/6c757d.jpg" :--%>
             <!-- Product image-->
                 <%--                        <% String address= request.getContextPath(); request.setAttribute("address", address);%>--%>
+            <c:if test="${mbList.attaches.size() eq 0 }">
+                <img class="card-img-top" alt="image" style="height: 250px; width: 270px"
+                     src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg">
+            </c:if>
+            <c:if test="${mbList.attaches.size() > 0 }">
             <img class="card-img-top" alt="image" style="height: 250px; width: 270px"
                  src="<%=request.getContextPath()%>/attach/showImg.wow?fileName=${mbList.attaches[0].atchFileName}&filePath=${mbList.attaches[0].atchPath}">
-
+            </c:if>
             <div>
 
             </div>
@@ -37,7 +42,7 @@
                     <h5 class="fw-bolder">${mbList.mbProduct}</h5>
                     <!-- Product reviews-->
                     <div class="d-flex justify-content-center small text-warning mb-2">
-                        <div class="bi-star-fill"></div>
+                        <div class="bi-star-fill">작성일: ${mbList.mbRegDate}</div>
                         <div class="bi-star-fill"></div>
                         <div class="bi-star-fill"></div>
                         <div class="bi-star-fill"></div>

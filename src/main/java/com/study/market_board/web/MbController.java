@@ -2,12 +2,15 @@ package com.study.market_board.web;
 
 import com.study.common.attach.vo.AttachVO;
 import com.study.common.util.StudyAttachUtils;
+import com.study.common.vo.PagingVO;
 import com.study.market_board.service.IMbService;
 import com.study.market_board.vo.MbVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
@@ -27,8 +30,8 @@ public class MbController {
 
 
     @RequestMapping("/")
-    public String marketHome(Model model){  // Home이지만 List가 홈임
-        List<MbVO> marketBoardList = mbService.getMarketBoardList("MBC01", "DESC");
+    public String marketHome(Model model, @ModelAttribute("paging") PagingVO paging){  // Home이지만 List가 홈임
+        List<MbVO> marketBoardList = mbService.getMarketBoardList("MBC01", "DESC", paging);
 
 
         model.addAttribute("marketBoardList", marketBoardList);
@@ -41,8 +44,8 @@ public class MbController {
     }
 
     @RequestMapping("/market_board/boardList.wow")
-    public String marketList(Model model){
-        List<MbVO> marketBoardList = mbService.getMarketBoardList("MBC01","DESC");
+    public String marketList(Model model, @ModelAttribute("paging") PagingVO paging){
+        List<MbVO> marketBoardList = mbService.getMarketBoardList("MBC01","DESC", paging);
         model.addAttribute("marketBoardList", marketBoardList);
         return "market_board/boardList";
     }
@@ -66,10 +69,15 @@ public class MbController {
         return "redirect:market_board/boardList.wow";
     }
 
+
     @RequestMapping("/orderBy.wow")
-    public String setBoardByDate(Model model, String sort, String cate) {
-        List<MbVO> marketBoardList = mbService.getMarketBoardList(cate,sort);
+    public String setBoardByDate(Model model, String sort, String cate,int viewCnt,  @ModelAttribute("paging") PagingVO paging) {  // 시간 있으면 객체로 만들기
+
+        paging.setRowSizePerPage(viewCnt);
+        List<MbVO> marketBoardList = mbService.getMarketBoardList(cate,sort, paging);
+
         model.addAttribute("marketBoardList", marketBoardList);
+
         return "market_board/listBox";
     }
 

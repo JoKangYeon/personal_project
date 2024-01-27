@@ -2,6 +2,7 @@ package com.study.market_board.service;
 
 import com.study.common.attach.dao.IAttachDao;
 import com.study.common.attach.vo.AttachVO;
+import com.study.common.vo.PagingVO;
 import com.study.market_board.dao.IMbDao;
 import com.study.market_board.vo.MbVO;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,17 @@ public class IMbServiceImpl implements IMbService {
     IAttachDao attachDao;
 
     @Override
-    public List<MbVO> getMarketBoardList(String cate, String sort) {
+    public List<MbVO> getMarketBoardList(String cate, String sort, PagingVO paging) {
         System.out.println(cate  + sort);
-        List<MbVO> mbList = mbDao.getMbList(cate, sort);
+
+        int totalRowCount = mbDao.getTotalRowCount();
+        paging.setTotalRowCount(totalRowCount);
+        paging.pageSetting();
+
+        List<MbVO> mbList = mbDao.getMbList(cate, sort, paging);
+
+
+
         List<AttachVO> attaches = attachDao.getAttachList();
         // mbList에 attaches 값 넣어주기
         for (MbVO mbVO : mbList){

@@ -64,16 +64,19 @@
     <div style="width: 100%; height: 70%; display: flex; justify-content: center; margin-top: 20px">
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
-                <form class="d-flex" role="search" style="height: 50px; width: 500px">
+                <form id="searchForm" class="d-flex" role="search" style="height: 50px; width: 500px">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <input type="hidden" name="curPage" value="${paging.curPage}">
+                    <input type="hidden" name="rowSizePerPage" value="${paging.rowSizePerPage}">
+                    <button class="btn btn-outline-success" id="searchBtn" type="submit">Search</button>
                 </form>
             </div>
         </nav>
     </div>
     <div style="width: 100%; height: 15%; display: flex; justify-content: center">
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="DESC" checked="checked">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="DESC"
+                   checked="checked">
             <label class="form-check-label" for="inlineRadio1">최신순</label>
         </div>
         <div class="form-check form-check-inline">
@@ -84,7 +87,8 @@
 </div>
 <div style="width: 100%; height: 0%; display: flex; justify-content: center">
     <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio3" value="MBC01" checked="checked">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio3" value="MBC01"
+               checked="checked">
         <label class="form-check-label" for="inlineRadio3">All</label>
     </div>
     <div class="form-check form-check-inline">
@@ -100,6 +104,14 @@
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5">
+        <div class="col-sm-3 form-inline">
+            총 ${paging.totalRowCount} 게시글
+            <select id="id_rowSizePerPage" class="form-select input-sm">
+                <c:forEach var="i" begin="8" end="32" step="8">
+                    <option value="${i}"  ${paging.rowSizePerPage eq i ? "selected='selected'" : ""}>${i}개씩 보기</option>
+                </c:forEach>
+            </select>
+        </div>
         <div class="d-flex" style="justify-content: flex-end">
             <button type="button" class="btn btn-warning btn-lg"
                     style="margin-bottom: 12px;" onclick="location.href='/market_board/boardForm.wow'">판매글 작성하기
@@ -109,23 +121,30 @@
 
         </div>
     </div>
+
+    <%--  페이지네이션  --%>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <%-- 첫 페이지 --%>
             <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+                <a style="color: black" class="page-link" href="/market_board/boardList.wow?curPage=1" data-page="1" class="page-link">GoFirst</a>
+            </li>
+            <%-- 페이지 넘버링 --%>
+            <c:forEach begin="${paging.firstPage}" end="${paging.lastPage}" var="i">
+                <c:if test="${paging.curPage eq i}"><li class="page-item active"><a class="page-link" href="#">${i}</a></li></c:if>
+                <c:if test="${paging.curPage ne i}"><li class="page-item"><a class="page-link" href="/market_board/boardList.wow?curPage=${i}" data-page="${i}">${i}</a></li></c:if>
+            </c:forEach>
+
+            <%-- 마지막 페이지 --%>
+            <li class="page-item">
+                <a style="color: black" class="page-link" href="/market_board/boardList.wow?curPage=${paging.totalPageCount}" data-page="${paging.totalPageCount}"><span aria-hidden="true">GoLast</span></a>
             </li>
         </ul>
     </nav>
 </section>
 <!-- Footer-->
 <footer class="py-5 bg-dark">
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    <div class="container"><p class="m-0 text-center text-white">Next Market 2024</p></div>
 </footer>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -133,10 +152,19 @@
 <script src="<%=request.getContextPath() %>/resources/js/boardList.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+    // 카테고리 / 날짜 변수선언
     let radioValDate = $('input[name="inlineRadioOptions"]:checked').val();
     let radioValCate = $('input[name="inlineRadioOptions2"]:checked').val();
+    let selectBox = $("#id_rowSizePerPage");
+    let selectVal = 8;
     console.log(radioValDate, radioValCate);
 
+    // 페이지관련 변수 선언
+    $form = $("#searchForm")
+    $curPage = $form.find("input[name='curPage']");
+
+
+    /* 정렬 이벤트 */
 
     $(document).ready(() => {
         $('input:radio[name="inlineRadioOptions"]:radio[value="DESC"]').prop('checked', true);
@@ -162,23 +190,43 @@
         })
     })
 
+    selectBox.on("change", function (e) {
+        $form.find("input[name='rowSizePerPage']").val($(this).val());
+
+        selectVal = $form.find("input[name='rowSizePerPage']").val();
+
+        boardListLoad()
+
+
+    })
 
 
 
+
+    // 검색버튼 누를 때 1페이지로
+    $("#searchBtn").on("click", (e) => {
+        e.preventDefault();
+        $curPage.val(1);
+        $form.submit();
+    })
+
+    /* 페이지 이벤트 추가 */
+
+    //페이지 링크 클릭
+    $('ul.pagingnation li a[data-page]').click((e) => {
+        e.preventDefault()  // a태그이벤트 방지
+        $curPage.val($(this).data('page'));
+        $form.submit();
+    })
+
+
+
+    // 리스트 가져오는 로더
     function boardListLoad() {
-        let listParam = {"sort" : radioValDate, "cate":radioValCate};
+        let listParam = {"sort": radioValDate, "cate": radioValCate, "viewCnt": selectVal};
         let $listDiv = $("#list_box")
         $listDiv.load("/orderBy.wow", listParam);
     }
-
-
-
-
-
-
-
-
-
 
 
 </script>

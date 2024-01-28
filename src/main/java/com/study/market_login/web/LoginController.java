@@ -85,7 +85,8 @@ public class LoginController {
 
 
     @RequestMapping("/login/logout.wow")
-    public String logout(){
+    public String logout(HttpSession session){
+        session.invalidate();
         return "/market_board/boardList";
     }
 

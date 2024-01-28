@@ -15,7 +15,6 @@ public class PagingVO implements Serializable {
 		//totalPage는  26
 		//curPage=26으로 하면  firstRow  251, lastRow 251,   firstPage 21, lastPage 26
 		pagingVO.pageSetting();
-		System.out.println(pagingVO);
 
 	}
 	

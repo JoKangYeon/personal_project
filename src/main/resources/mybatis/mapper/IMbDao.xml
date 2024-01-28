@@ -8,66 +8,67 @@
             SELECT seq_market_board.nextval from dual
         </selectKey>
         INSERT INTO market_board (
-            mb_no,
-            mb_product,
-            mb_title,
-            mb_category,
-            mb_price,
-            mb_writer,
-            mb_content
+        mb_no,
+        mb_product,
+        mb_title,
+        mb_category,
+        mb_price,
+        mb_writer,
+        mb_content
         ) VALUES (
-           #{mbNo},
-           #{mbProduct},
-           #{mbTitle},
-           #{mbCategory},
-           #{mbPrice},
-           #{mbWriter},
-           #{mbContent}
-                 )
+        #{mbNo},
+        #{mbProduct},
+        #{mbTitle},
+        #{mbCategory},
+        #{mbPrice},
+        #{mbWriter},
+        #{mbContent}
+        )
     </insert>
 
 
     <select id="getMbList" resultType="com.study.market_board.vo.MbVO" >
         SELECT b.*
         FROM   (SELECT
-                    rownum AS rnum,
-                    a.*
-                FROM   (SELECT
-                            mb_no,
-                            mb_product,
-                            mb_title,
-                            mb_category,
-                            mb_price,
-                            mb_writer,
-                            mb_content,
-                            mb_hit,
-                            mb_reg_date,
-                            mb_mod_date,
-                            mb_del_yn
-                        FROM
-                            market_board
-                        ORDER BY mb_no DESC) a ) b
-        WHERE b.rnum between #{paging.firstRow} and #{paging.lastRow}
+        rownum AS rnum,
+        a.*
+        FROM   (SELECT
+        mb_no,
+        mb_product,
+        mb_title,
+        mb_category,
+        mb_price,
+        mb_writer,
+        mb_content,
+        mb_hit,
+        mb_reg_date,
+        mb_mod_date,
+        mb_del_yn
+        FROM
+        market_board
+        WHERE mb_del_yn = 'N'
 
         <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(cate)">
+          <if test='cate != "MBC01"'>
+                AND mb_category = #{cate}
+              <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchWord)">
+                  AND mb_title LIKE '%' || #{searchWord} ||'%'
+              </if>
+          </if>
             <if test='cate == "MBC01"'>
-                AND b.mb_del_yn = 'N'
-            </if>
-            <if test='cate == "MBC02"'>
-                AND b.mb_category = #{cate}
-                AND b.mb_del_yn = 'N'
-            </if>
-            <if test='cate == "MBC03"'>
-                AND b.mb_category = #{cate}
-                AND b.mb_del_yn = 'N'
+                <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchWord)">
+                    AND mb_title LIKE '%' || #{searchWord} ||'%'
+                </if>
             </if>
         </if>
-
 
         <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(sort)">
-            <if test='sort == "ASC"'>ORDER BY b.mb_no ASC</if>
-            <if test='sort == "DESC"'>ORDER BY b.mb_no DESC</if>
+            <if test='sort == "ASC"'>ORDER BY mb_no ASC</if>
+            <if test='sort == "DESC"'>ORDER BY mb_no DESC</if>
         </if>
+        ) a ) b
+        WHERE rnum between #{paging.firstRow} and #{paging.lastRow}
+
     </select>
 
 
@@ -75,6 +76,16 @@
         SELECT count(*)
         FROM market_board
         WHERE mb_del_yn='N'
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(cate)">
+
+            <if test='cate != "MBC01"'>
+                AND mb_category = #{cate}
+            </if>
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchWord)">
+                AND mb_title LIKE '%' || #{searchWord} ||'%'
+        </if>
+
     </select>
 
 

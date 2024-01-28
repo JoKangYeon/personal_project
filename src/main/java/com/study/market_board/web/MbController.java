@@ -31,7 +31,10 @@ public class MbController {
 
     @RequestMapping("/")
     public String marketHome(Model model, @ModelAttribute("paging") PagingVO paging){  // Home이지만 List가 홈임
-        List<MbVO> marketBoardList = mbService.getMarketBoardList("MBC01", "DESC", paging);
+        String sort = "DESC";
+        String cate = "MBC01";
+        String searchWord = "";
+        List<MbVO> marketBoardList = mbService.getMarketBoardList(cate, sort, paging, searchWord);
 
 
         model.addAttribute("marketBoardList", marketBoardList);
@@ -45,7 +48,7 @@ public class MbController {
 
     @RequestMapping("/market_board/boardList.wow")
     public String marketList(Model model, @ModelAttribute("paging") PagingVO paging){
-        List<MbVO> marketBoardList = mbService.getMarketBoardList("MBC01","DESC", paging);
+        List<MbVO> marketBoardList = mbService.getMarketBoardList("MBC01","DESC", paging, "");
         model.addAttribute("marketBoardList", marketBoardList);
         return "market_board/boardList";
     }
@@ -71,18 +74,28 @@ public class MbController {
 
 
     @RequestMapping("/orderBy.wow")
-    public String setBoardByDate(Model model, String sort, String cate,int viewCnt,  @ModelAttribute("paging") PagingVO paging) {  // 시간 있으면 객체로 만들기
+    public String setBoardByDate(Model model, String sort, String cate,Integer viewCnt, Integer curPageVal, @ModelAttribute("paging") PagingVO paging, String searchWord) {  // 시간 있으면 객체로 만들기
 
         paging.setRowSizePerPage(viewCnt);
-        List<MbVO> marketBoardList = mbService.getMarketBoardList(cate,sort, paging);
+        paging.setCurPage(curPageVal);
+        List<MbVO> marketBoardList = mbService.getMarketBoardList(cate,sort,paging, searchWord);
 
         model.addAttribute("marketBoardList", marketBoardList);
 
         return "market_board/listBox";
     }
 
+    @RequestMapping("/setPage.wow")
+    public String setPage(Model model, String sort, String cate,Integer viewCnt, Integer curPageVal, @ModelAttribute("paging") PagingVO paging, String searchWord) {  // 시간 있으면 객체로 만들기
 
+        paging.setRowSizePerPage(viewCnt);
+        paging.setCurPage(curPageVal);
+        List<MbVO> marketBoardList = mbService.getMarketBoardList(cate,sort,paging, searchWord);
 
+        model.addAttribute("marketBoardList", marketBoardList);
+
+        return "market_board/pageBox";
+    }
 
 
 

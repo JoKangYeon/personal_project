@@ -20,14 +20,14 @@ public class IMbServiceImpl implements IMbService {
     IAttachDao attachDao;
 
     @Override
-    public List<MbVO> getMarketBoardList(String cate, String sort, PagingVO paging) {
+    public List<MbVO> getMarketBoardList(String cate, String sort, PagingVO paging, String searchWord) {
         System.out.println(cate  + sort);
 
-        int totalRowCount = mbDao.getTotalRowCount();
+        int totalRowCount = mbDao.getTotalRowCount(cate, searchWord);
         paging.setTotalRowCount(totalRowCount);
         paging.pageSetting();
 
-        List<MbVO> mbList = mbDao.getMbList(cate, sort, paging);
+        List<MbVO> mbList = mbDao.getMbList(cate, sort, paging, searchWord);
 
 
 

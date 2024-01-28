@@ -35,7 +35,7 @@
             <c:if test='<%=request.getParameter("msg") != null%>'>
                 <div id="loginMessage" style="color: red"><%=request.getParameter("msg")%></div>
             </c:if>
-            <div style="margin-bottom: 7px"><label><input type="checkbox" name="rememberMe" value="Y"/>ID 7일동안 기억하기</label></div>
+            <div style="margin-bottom: 7px"><label><input type="checkbox" name="rememberMe" value="Y" checked/>ID 기억하기</label></div>
             <button id="loginBtn" type="submit">Login</button>
         </form>
         <p style="margin-bottom: 0"><a href="/login/signup.wow" style="text-decoration: none; font-size: 13px">SignUp</a></p>

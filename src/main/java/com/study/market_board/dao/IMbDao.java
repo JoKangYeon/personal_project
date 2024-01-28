@@ -11,8 +11,8 @@ import java.util.List;
 @Mapper
 public interface IMbDao {
 
-    public List<MbVO> getMbList(@Param("cate") String cate, @Param("sort") String sort, @Param("paging") PagingVO paging);
+    public List<MbVO> getMbList(@Param("cate") String cate, @Param("sort") String sort, @Param( value= "paging") PagingVO paging, @Param("searchWord") String searchWord);
     public void insertMb(MbVO mbVO);
-    public int getTotalRowCount();
+    public int getTotalRowCount(@Param("cate") String cate, @Param("searchWord") String searchWord);
 
 }

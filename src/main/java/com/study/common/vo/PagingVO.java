@@ -46,8 +46,6 @@ public class PagingVO implements Serializable {
 		lastPage=firstPage+pageSize-1;
 		if(lastPage>totalPageCount) lastPage=totalPageCount;
 
-
-
 	}
 	 @Override 
 	  public String toString() {

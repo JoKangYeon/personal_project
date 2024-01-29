@@ -95,6 +95,7 @@
                                 <li>
                                     <hr class="dropdown-divider"/>
                                 </li>
+                                <li><a class="dropdown-item" href="#">내글보기</a></li>
                                 <li><a class="dropdown-item" href="/login/logout.wow">로그아웃</a></li>
 
                             </ul>

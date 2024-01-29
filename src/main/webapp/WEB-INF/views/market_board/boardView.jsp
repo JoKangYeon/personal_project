@@ -1,37 +1,114 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.study.member.vo.MemberVO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>View</title>
     <link href="<%=request.getContextPath() %>/resources/css/boardCSS/boardView.css" rel="stylesheet">
-    <script src="<%=request.getContextPath() %>/resources/js/boardView.js"></script>
+    <style>
+        /* 스타일링을 위한 CSS 코드 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #comment-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        #comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            resize: vertical;
+        }
+
+        #comment-form input[type="submit"] {
+            background-color: lightslategray;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 3px;
+            float: right; /* 오른쪽으로 이동 */
+        }
+
+        #comment-form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        #reply_list_area {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .row {
+            display: flex;
+            align-items: center;
+        }
+        .col-sm-2 {
+            flex: 1;
+            text-align: center;
+        }
+        .col-sm-6 {
+            flex: 4;
+            padding: 5px;
+        }
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .col-sm-2:last-child {
+            text-align: right;
+        }
+        .btn-reply {
+            margin-right: 5px;
+        }
+    </style>
 </head>
 <body>
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">Start Bootstrap</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <a class="navbar-brand" href="#!">Detail View</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">바로가기</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">All Products</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                        <li><a class="dropdown-item" href="/">All Products</a></li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li><a class="dropdown-item" href="#!">인기글보기</a></li>
+                        <li><a class="dropdown-item" href="#!">신규글보기</a></li>
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex">
-                <button class="btn btn-outline-dark" type="submit">
+            <%--            <form class="d-flex" action="#">--%>
+            <div>
+                <button class="btn btn-outline-dark" type="button" id="inquiryBtn">
                     <i class="bi-cart-fill me-1"></i>
-                    Cart
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    1:1문의하기
+                    <%--                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>--%>
                 </button>
-            </form>
+            </div>
+            <%--            </form>--%>
         </div>
     </div>
 </nav>
@@ -39,20 +116,39 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." /></div>
+            <div class="col-md-6" style="position: relative;">
+                <c:if test="${mbBoard.attaches.size() eq 0 }">
+                    <img class="card-img-top mb-5 mb-md-0"
+                         src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
+                         style="width: 500px; height: 500px"
+                         alt="..."/>
+                </c:if>
+                <c:if test="${mbBoard.attaches.size() > 0 }">
+
+                    <img class="card-img-top mb-5 mb-md-0" style="width: 500px; height: 500px" id="boardImage"
+                         src="<%=request.getContextPath()%>/attach/showImg.wow?fileName=${mbBoard.attaches[0].atchFileName}&filePath=${mbBoard.attaches[0].atchPath}"
+                         alt="image"/>
+                    <a href="#" id="imageNextBtn"
+                       style="position: absolute; top: 50%; right: 70px; text-decoration-line: none; font-size: 50px; transform: translateY(-50%);">></a>
+                </c:if>
+
+            </div>
             <div class="col-md-6">
-                <div class="small mb-1">SKU: BST-498</div>
-                <h1 class="display-5 fw-bolder">Shop item template</h1>
+                <div class="small mb-1">000${mbBoard.mbNo}</div>
+                <h2>상품명 : ${mbBoard.mbProduct}</h2>
                 <div class="fs-5 mb-5">
-                    <span class="text-decoration-line-through">$45.00</span>
-                    <span>$40.00</span>
+                    <%--                    <span class="text-decoration-line-through">$45.00</span>--%>
+                    <span>판매자: ${mbBoard.mbWriter}</span><br>
+                    <span>판매가격: ${mbBoard.mbPrice}원</span><br>
+                    <span>등록일: ${mbBoard.mbRegDate}</span><br>
+                    <span>조회수: ${mbBoard.mbHit}</span>
                 </div>
-                <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
+                <p class="lead">${mbBoard.mbContent}</p>
                 <div class="d-flex">
-                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                    <%--                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />--%>
                     <button class="btn btn-outline-dark flex-shrink-0" type="button">
                         <i class="bi-cart-fill me-1"></i>
-                        Add to cart
+                        게시글 찜하기
                     </button>
                 </div>
             </div>
@@ -62,116 +158,97 @@
 <!-- Related items section-->
 <section class="py-5 bg-light">
     <div class="container px-4 px-lg-5 mt-5">
-        <h2 class="fw-bolder mb-4">Related products</h2>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">Fancy Product</h5>
-                            <!-- Product price-->
-                            $40.00 - $80.00
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Sale badge-->
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">Special Item</h5>
-                            <!-- Product reviews-->
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div>
-                            <!-- Product price-->
-                            <span class="text-muted text-decoration-line-through">$20.00</span>
-                            $18.00
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Sale badge-->
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">Sale Item</h5>
-                            <!-- Product price-->
-                            <span class="text-muted text-decoration-line-through">$50.00</span>
-                            $25.00
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">Popular Item</h5>
-                            <!-- Product reviews-->
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div>
-                            <!-- Product price-->
-                            $40.00
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                    </div>
-                </div>
-            </div>
+        <div id="comment-form">
+            <h2>댓글 남기기</h2>
+            <form  method="post" name="commentForm" id="commentForm">
+                <label for="comment"></label><textarea name="comment" id="comment" ${sessionScope.USER.mmId eq null ? "readonly" : ""} cols="30" rows="5" placeholder="댓글을 입력해주세요..."></textarea><br>
+                <input id="registReplyBtn" type="submit" value="댓글 등록">
+            </form>
+        </div>
+        <div id="reply_list_area" data-page="1">
+
         </div>
     </div>
+    <div class="text-center" id="id_reply_list_more" >
+        <a id="btn_reply_list_more"
+           class="btn btn-sm btn-default col-sm-10 col-sm-offset-1" style="background-color: #badce3"> <span
+                class="row" aria-hidden="true"></span>
+            이전댓글
+        </a>
+    </div>
+
 </section>
 <!-- Footer-->
 <footer class="py-5 bg-dark">
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    <div class="container"><p class="m-0 text-center text-white">Next Market 2024</p></div>
 </footer>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    let param = {"curPage": 1, "reParentNo": ${mbBoard.mbNo}, "reCategory": "market_board", "reMemId": ${sessionScope.USER.mmId}}
+
+
+    $("#inquiryBtn").on("click", () => {
+        alert(`준비중인 서비스입니다.`)
+    })
+
+    $(document).ready(() => {
+        replyLoad();
+    })
+
+
+    //이전댓글 버튼
+    $("#id_reply_list_more").on("click", function (e) {
+        curPage = curPage + 1;
+        replyLoad();
+    });
+
+
+    //등록버튼
+    $("#registReplyBtn").on("click", function (e) {
+        // form태그안에 input hidden으로 필요한거 넣기
+        //가장가까운 form찾은 후 ajax 호출(data는 form.serialize(), )
+
+
+        if ('${sessionScope.USER.mmId}' == ''){
+            alert("댓글은 로그인 후 사용해주세요.");
+        } else {
+            e.preventDefault();
+            let formTag = $("form[name='commentForm']");
+            let parentReplyTag = $("#reply_list_area")
+            console.log(parentReplyTag.val())
+            $.ajax({
+
+                url : "/reply/replyRegist",
+                data : {"re_content": parentReplyTag.val()},
+                //성공 시 댓글비우기 / 다시 로드 / 1페이지로
+                success : function (data) {
+                    alert("댓글등록o")
+                    formTag.find("textarea").val("");
+                    parentReplyTag.html("");
+                    curPage = 1;
+                }
+            })
+        }
+        replyLoad();
+    });
+
+
+
+
+
+
+    // 댓글 가져오는 로더
+    function replyLoad() {
+        let $replyDiv = $("#reply_list_area")
+        $replyDiv.load("/reply/replyList", param);
+
+    }
+
+
+</script>
 </body>
 </html>

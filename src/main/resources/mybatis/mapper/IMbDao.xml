@@ -57,7 +57,7 @@
           </if>
             <if test='cate == "MBC01"'>
                 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchWord)">
-                    AND mb_title LIKE '%' || #{searchWord} ||'%'
+                    AND mb_product LIKE '%' || #{searchWord} ||'%'
                 </if>
             </if>
         </if>
@@ -83,9 +83,27 @@
             </if>
         </if>
         <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchWord)">
-                AND mb_title LIKE '%' || #{searchWord} ||'%'
+                AND mb_product LIKE '%' || #{searchWord} ||'%'
         </if>
 
+    </select>
+
+    <select id="getMbBoard" resultType="com.study.market_board.vo.MbVO" parameterType="integer">
+        SELECT
+            mb_no,
+            mb_product,
+            mb_title,
+            mb_category,
+            mb_price,
+            mb_writer,
+            mb_content,
+            mb_hit,
+            mb_reg_date,
+            mb_mod_date,
+            mb_del_yn
+        FROM
+            market_board
+        WHERE mb_no = #{mbNo}
     </select>
 
 

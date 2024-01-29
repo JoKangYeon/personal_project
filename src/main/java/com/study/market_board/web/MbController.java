@@ -42,7 +42,9 @@ public class MbController {
     }
 
     @RequestMapping("/market_board/boardView.wow")
-    public String marketView(Model model){
+    public String marketView(Model model, int mbNo){
+        MbVO mbBoard = mbService.getMbBoard(mbNo);
+        model.addAttribute("mbBoard", mbBoard);
         return "market_board/boardView";
     }
 

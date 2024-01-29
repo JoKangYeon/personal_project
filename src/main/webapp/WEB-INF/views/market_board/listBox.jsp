@@ -25,11 +25,11 @@
             <!-- Product image-->
                 <%--                        <% String address= request.getContextPath(); request.setAttribute("address", address);%>--%>
             <c:if test="${mbList.attaches.size() eq 0 }">
-                <img class="card-img-top" alt="image" style="height: 250px; width: 270px"
+                <img class="card-img-top" alt="image" style="height: 250px; width: 268px"
                      src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg">
             </c:if>
             <c:if test="${mbList.attaches.size() > 0 }">
-            <img class="card-img-top" alt="image" style="height: 250px; width: 270px"
+            <img class="card-img-top" alt="image" style="height: 250px; width: 268px"
                  src="<%=request.getContextPath()%>/attach/showImg.wow?fileName=${mbList.attaches[0].atchFileName}&filePath=${mbList.attaches[0].atchPath}">
             </c:if>
             <div>
@@ -56,7 +56,7 @@
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                 <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                            href="/market_board/boardView.wow">DetailView</a></div>
+                                            href="/market_board/boardView.wow?mbNo=${mbList.mbNo}">DetailView</a></div>
             </div>
         </div>
     </div>

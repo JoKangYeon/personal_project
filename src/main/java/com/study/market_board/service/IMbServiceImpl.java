@@ -37,7 +37,7 @@ public class IMbServiceImpl implements IMbService {
             for (AttachVO attach : attaches){
                 if(mbVO.getMbNo() == attach.getAtchParentNo()){
                     mbVO.getAttaches().add(attach);
-                    System.out.println(attach);
+//                    System.out.println(attach);
                 }
             }
         }
@@ -62,7 +62,20 @@ public class IMbServiceImpl implements IMbService {
         }
     }
 
+    @Override
+    public MbVO getMbBoard(int mbNo) {
+        MbVO mbBoard = mbDao.getMbBoard(mbNo);
+        List<AttachVO> attaches = attachDao.getAttachList();
 
+        for (AttachVO attach : attaches){
+            if(mbBoard.getMbNo() == attach.getAtchParentNo()){
+                mbBoard.getAttaches().add(attach);
+//                    System.out.println(attach);
+            }
+        }
+
+        return mbBoard;
+    }
 
 
 }

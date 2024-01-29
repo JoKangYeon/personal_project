@@ -10,5 +10,7 @@ public interface IMbService {
     public List<MbVO> getMarketBoardList(String cate, String sort, PagingVO paging, String searchWord);
     public  void insertMb(MbVO mbVO);
 
+    public MbVO getMbBoard(int mbNo);
+
 
 }

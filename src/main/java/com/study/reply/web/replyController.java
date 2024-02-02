@@ -21,10 +21,20 @@ public class replyController {
 
     @RequestMapping("/reply/replyList")
     public String replyList(Model model, PagingVO paging, ReplyVO reply){
-        List<ReplyVO> replyList = replyService.getReplyListByParent(paging, reply.getReCategory(), reply.getReNo());
+        System.out.println(reply);
+        List<ReplyVO> replyList = replyService.getReplyListByParent(paging, reply);
+        int totalCount = replyService.getReplyCountByParent(paging, reply.getReCategory(), reply.getReParentNo());
+        paging.setTotalRowCount(totalCount);
+        paging.pageSetting();
+
         model.addAttribute("replyList", replyList);
+        model.addAttribute("paging", paging);
+
+
         return "market_board/replyBox";
     }
+
+
 
     @ResponseBody
     @RequestMapping("/reply/replyRegist")

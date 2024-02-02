@@ -19,8 +19,8 @@
                            re_reg_date,
                            re_mod_date
                     FROM pp_reply
-                    WHERE re_parent_no = #{reParentNo}
-                      AND re_category = #{reCategory}
+                    WHERE re_parent_no = #{reply.reParentNo}
+                      AND re_category = #{reply.reCategory}
                     ORDER BY re_no desc) a) b
         WHERE rnum between #{paging.firstRow} and #{paging.lastRow}
     </select>

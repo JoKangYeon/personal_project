@@ -12,7 +12,7 @@ import java.util.List;
 public interface IReplyDao {
 	public int getReplyCountByParent(@Param("paging") PagingVO paging, @Param("reCategory") String reCategory,@Param("reParentNo") int reParentNo);
 
-	public List<ReplyVO> getReplyListByParent(@Param("paging")PagingVO paging, @Param("reCategory") String reCategory, @Param("reParentNo") int reParentNo);
+	public List<ReplyVO> getReplyListByParent(@Param("paging")PagingVO paging, @Param("reply") ReplyVO reply );
 
 //	public ReplyVO getReply(int reNo);
 

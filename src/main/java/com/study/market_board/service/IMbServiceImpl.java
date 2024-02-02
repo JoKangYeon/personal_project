@@ -77,5 +77,10 @@ public class IMbServiceImpl implements IMbService {
         return mbBoard;
     }
 
+    @Override
+    public void addViewCount(int mbNo) {
+        mbDao.addViewCount(mbNo);
+    }
+
 
 }

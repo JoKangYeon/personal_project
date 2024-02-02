@@ -15,5 +15,6 @@ public interface IMbDao {
     public void insertMb(MbVO mbVO);
     public int getTotalRowCount(@Param("cate") String cate, @Param("searchWord") String searchWord);
     public MbVO getMbBoard(int mbNo);
+    public void addViewCount(int mbNo);
 
 }

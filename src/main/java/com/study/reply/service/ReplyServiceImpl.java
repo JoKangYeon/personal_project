@@ -15,13 +15,22 @@ public class ReplyServiceImpl implements IReplyService {
     private IReplyDao replyDao;
 
     @Override
-    public List<ReplyVO> getReplyListByParent(PagingVO paging, String reCategory, int reParentNo) {
-        int totalRowCount = replyDao.getReplyCountByParent(paging,reCategory, reParentNo);
+    public List<ReplyVO> getReplyListByParent(PagingVO paging, ReplyVO reply) {
+        int totalRowCount = replyDao.getReplyCountByParent(paging,reply.getReCategory(), reply.getReParentNo());
         paging.setTotalRowCount(totalRowCount);
         paging.pageSetting();
-        List<ReplyVO> replyList = replyDao.getReplyListByParent(paging,reCategory,reParentNo);
-        return replyList;
+        return replyDao.getReplyListByParent(paging,reply);
     }
+
+    @Override
+    public int getReplyCountByParent(PagingVO paging, String reCategory, int reparentNo) {
+        int totalRowCount = replyDao.getReplyCountByParent(paging, reCategory, reparentNo);
+        paging.setTotalRowCount(totalRowCount);
+        paging.pageSetting();
+        return totalRowCount;
+    }
+
+
 
     @Override
     public void modifyReply(ReplyVO reply){
@@ -37,4 +46,6 @@ public class ReplyServiceImpl implements IReplyService {
     public void registReply(ReplyVO reply) {
         replyDao.insertReply(reply);
     }
+
+
 }

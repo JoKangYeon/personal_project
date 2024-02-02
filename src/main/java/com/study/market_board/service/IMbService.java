@@ -12,5 +12,7 @@ public interface IMbService {
 
     public MbVO getMbBoard(int mbNo);
 
+    public void addViewCount(int mbNo);
+
 
 }

@@ -106,5 +106,13 @@
         WHERE mb_no = #{mbNo}
     </select>
 
+    <insert id="addViewCount" parameterType="int">
+        UPDATE market_board
+        SET
+            mb_hit = mb_hit + 1
+        WHERE
+            mb_no = #{mbNo}
+    </insert>
+
 
 </mapper>

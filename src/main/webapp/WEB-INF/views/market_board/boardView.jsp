@@ -44,32 +44,39 @@
         #comment-form input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
         #reply_list_area {
             margin-bottom: 10px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         .row {
             display: flex;
             align-items: center;
         }
+
         .col-sm-2 {
             flex: 1;
             text-align: center;
         }
+
         .col-sm-6 {
             flex: 4;
             padding: 5px;
         }
+
         pre {
             margin: 0;
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
         .col-sm-2:last-child {
             text-align: right;
         }
+
         .btn-reply {
             margin-right: 5px;
         }
@@ -160,22 +167,22 @@
     <div class="container px-4 px-lg-5 mt-5">
         <div id="comment-form">
             <h2>댓글 남기기</h2>
-            <form  method="post" name="commentForm" id="commentForm">
-                <label for="comment"></label><textarea name="comment" id="comment" ${sessionScope.USER.mmId eq null ? "readonly" : ""} cols="30" rows="5" placeholder="댓글을 입력해주세요..."></textarea><br>
+            <form method="post" name="commentForm" id="commentForm">
+                <label for="comment"></label><textarea name="reContent"
+                                                       id="comment" ${sessionScope.USER.mmId eq null ? "readonly" : ""}
+                                                       cols="30" rows="5" placeholder="댓글을 입력해주세요..."></textarea><br>
                 <input id="registReplyBtn" type="submit" value="댓글 등록">
+                <input type="hidden" name="reCategory" value="market_board">
+                <input type="hidden" name="reParentNo" value="${mbBoard.mbNo}">
+                <input type="hidden" name="reMemId" value="${sessionScope.USER.mmId}">
+
             </form>
         </div>
-        <div id="reply_list_area" data-page="1">
+        <div id="reply_list_area" data-page="1" >
 
         </div>
     </div>
-    <div class="text-center" id="id_reply_list_more" >
-        <a id="btn_reply_list_more"
-           class="btn btn-sm btn-default col-sm-10 col-sm-offset-1" style="background-color: #badce3"> <span
-                class="row" aria-hidden="true"></span>
-            이전댓글
-        </a>
-    </div>
+
 
 </section>
 <!-- Footer-->
@@ -185,10 +192,14 @@
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
-<script src="js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    let param = {"curPage": 1, "reParentNo": ${mbBoard.mbNo}, "reCategory": "market_board", "reMemId": ${sessionScope.USER.mmId}}
+    let param = {
+        "curPage": 1
+        , "reParentNo": ${mbBoard.mbNo}
+        , "reCategory": "market_board"
+        , "reMemId": '${sessionScope.USER.mmId}'
+    }
 
 
     $("#inquiryBtn").on("click", () => {
@@ -200,11 +211,7 @@
     })
 
 
-    //이전댓글 버튼
-    $("#id_reply_list_more").on("click", function (e) {
-        curPage = curPage + 1;
-        replyLoad();
-    });
+
 
 
     //등록버튼
@@ -213,32 +220,28 @@
         //가장가까운 form찾은 후 ajax 호출(data는 form.serialize(), )
 
 
-        if ('${sessionScope.USER.mmId}' == ''){
+        e.preventDefault();
+        if ('${sessionScope.USER.mmId}' == '') {
             alert("댓글은 로그인 후 사용해주세요.");
         } else {
-            e.preventDefault();
             let formTag = $("form[name='commentForm']");
             let parentReplyTag = $("#reply_list_area")
-            console.log(parentReplyTag.val())
             $.ajax({
 
-                url : "/reply/replyRegist",
-                data : {"re_content": parentReplyTag.val()},
-                //성공 시 댓글비우기 / 다시 로드 / 1페이지로
-                success : function (data) {
-                    alert("댓글등록o")
-                    formTag.find("textarea").val("");
-                    parentReplyTag.html("");
-                    curPage = 1;
-                }
-            })
+                    url : "/reply/replyRegist",
+                    data : formTag.serialize(),
+                    //성공 시 댓글비우기 / 다시 로드 / 1페이지로
+                    success : function (data) {
+                        alert("댓글등록o")
+                        formTag.find("textarea").val("");
+                        param.curPage = 1;
+                        replyLoad();
+                    }
+                })
+
         }
-        replyLoad();
+
     });
-
-
-
-
 
 
     // 댓글 가져오는 로더
